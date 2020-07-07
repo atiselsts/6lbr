@@ -167,7 +167,7 @@ extern int udp_client_rssi;
 #include "dev/leds.h"
 
 #if REST_RES_LED_RED
-inline int led_r_value(void) {
+static inline int led_r_value(void) {
   return ((leds_get() & LEDS_RED) != 0);
 }
 
@@ -186,7 +186,7 @@ static int led_r_set(uint32_t value, uint32_t len) {
 #endif
 
 #if REST_RES_LED_GREEN
-inline int led_g_value(void) {
+static inline int led_g_value(void) {
   return ((leds_get() & LEDS_GREEN) != 0);
 }
 
@@ -205,7 +205,7 @@ static int led_g_set(uint32_t value, uint32_t len) {
 #endif
 
 #if REST_RES_LED_BLUE
-inline int led_b_value(void) {
+static inline int led_b_value(void) {
   return ((leds_get() & LEDS_BLUE) != 0);
 }
 

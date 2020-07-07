@@ -190,8 +190,8 @@ while true; do
 	echo "********************************************************************************" >> /dev/stderr
 	echo $TIMESTAMP >> /dev/stderr
 	
-	echo "$BIN $PARAMS"
-	$BIN $PARAMS &
+	echo "sudo $BIN $PARAMS"
+	sudo $BIN $PARAMS &
 	PID_6LBR=$!
 	
 	if [ $WATCHDOG_INTERVAL != "0" ]; then
