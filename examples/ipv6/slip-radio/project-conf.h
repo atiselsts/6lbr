@@ -53,7 +53,8 @@
 #undef QUEUEBUF_CONF_NUM
 #define QUEUEBUF_CONF_NUM          16
 
-#define SLIP_CONF_BUF_NB        16
+//#define SLIP_CONF_BUF_NB        16
+#define SLIP_CONF_BUF_NB        5
 
 #undef UIP_CONF_BUFFER_SIZE
 #if SLIP_RADIO_IP
