@@ -87,7 +87,9 @@ struct ifreq if_idx;
 //Temporary, should be removed
 #include "native-rdc.h"
 #include "slip-dev.h"
+#include "dev/spi.h"
 //End of temporary
+
 
 extern void cetic_6lbr_clear_ip(void);
 
@@ -229,7 +231,7 @@ tap_alloc(char *dev)
    */
   ifr.ifr_flags = IFF_TAP | IFF_NO_PI;
   if(*dev != 0)
-    strncpy(ifr.ifr_name, dev, IFNAMSIZ);
+    strncpy(ifr.ifr_name, dev, IFNAMSIZ - 1);
 
   if((err = ioctl(fd, TUNSETIFF, (void *)&ifr)) < 0) {
     close(fd);
@@ -417,3 +419,9 @@ handle_fd(fd_set * rset, fd_set * wset)
   }
 }
 /*---------------------------------------------------------------------------*/
+
+
+bool spi_arch_has_lock(const spi_device_t *dev)
+{
+    return false;
+}

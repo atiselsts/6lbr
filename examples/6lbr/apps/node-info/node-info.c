@@ -58,11 +58,7 @@
 #include "node-info-export.h"
 #endif
 
-#define UIP_IP_BUF                          ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
-#define UIP_ICMP_BUF                      ((struct uip_icmp_hdr *)&uip_buf[uip_l2_l3_hdr_len])
-#define UIP_UDP_BUF                        ((struct uip_udp_hdr *)&uip_buf[UIP_LLH_LEN + UIP_IPH_LEN])
-#define UIP_TCP_BUF                        ((struct uip_tcp_hdr *)&uip_buf[UIP_LLH_LEN + UIP_IPH_LEN])
-#define UIP_EXT_BUF                        ((struct uip_ext_hdr *)&uip_buf[uip_l2_l3_hdr_len])
+#define UIP_EXT_BUF       ((struct uip_ext_hdr *)UIP_IP_PAYLOAD(0))
 
 node_info_t node_info_table[UIP_DS6_ROUTE_NB];          /** \brief Node info table */
 
@@ -70,8 +66,8 @@ static struct uip_ds6_notification node_info_route_notification;
 
 void
 node_info_route_notification_cb(int event,
-                                uip_ipaddr_t * route,
-                                uip_ipaddr_t * nexthop, int num_routes)
+                                const uip_ipaddr_t * route,
+                                const uip_ipaddr_t * nexthop, int num_routes)
 {
   if(event == UIP_DS6_NOTIFICATION_ROUTE_ADD) {
     node_info_set_flags(route, NODE_INFO_HAS_ROUTE);
@@ -135,7 +131,7 @@ node_info_update_all(void)
 #endif
 }
 node_info_t *
-node_info_add(uip_ipaddr_t * ipaddr)
+node_info_add(const uip_ipaddr_t * ipaddr)
 {
   node_info_t *node = NULL;
 
@@ -156,7 +152,7 @@ node_info_add(uip_ipaddr_t * ipaddr)
 }
 
 node_info_t *
-node_info_update(uip_ipaddr_t * ipaddr, char * info)
+node_info_update(const uip_ipaddr_t * ipaddr, char * info)
 {
   node_info_t *node = NULL;
   char *  sep;
@@ -242,7 +238,7 @@ node_info_update(uip_ipaddr_t * ipaddr, char * info)
 }
 
 void
-node_info_node_seen(uip_ipaddr_t * ipaddr, int hop_count)
+node_info_node_seen(const uip_ipaddr_t * ipaddr, int hop_count)
 {
   node_info_t *node = NULL;
   node = node_info_lookup(ipaddr);
@@ -254,7 +250,7 @@ node_info_node_seen(uip_ipaddr_t * ipaddr, int hop_count)
 }
 
 void
-node_info_set_flags(uip_ipaddr_t * ipaddr, uint32_t flags)
+node_info_set_flags(const uip_ipaddr_t * ipaddr, uint32_t flags)
 {
   node_info_t *node = NULL;
   node = node_info_lookup(ipaddr);
@@ -267,7 +263,7 @@ node_info_set_flags(uip_ipaddr_t * ipaddr, uint32_t flags)
 }
 
 void
-node_info_clear_flags(uip_ipaddr_t * ipaddr, uint32_t flags)
+node_info_clear_flags(const uip_ipaddr_t * ipaddr, uint32_t flags)
 {
   node_info_t *node = NULL;
   node = node_info_lookup(ipaddr);
@@ -317,7 +313,7 @@ node_info_analyze_packet(void)
   }
   uip_next_hdr = &UIP_IP_BUF->proto;
   uip_ext_len = 0;
-  stat->size += uip_len - UIP_LLH_LEN;
+  stat->size += uip_len;
 
   while(!done) {
     done = 1;
@@ -357,7 +353,7 @@ node_info_rm(node_info_t *node_info)
 }
 
 void
-node_info_rm_by_addr(uip_ipaddr_t * ipaddr)
+node_info_rm_by_addr(const uip_ipaddr_t * ipaddr)
 {
   node_info_t *node_info = node_info_lookup(ipaddr);
 
@@ -367,7 +363,7 @@ node_info_rm_by_addr(uip_ipaddr_t * ipaddr)
 }
 
 node_info_t *
-node_info_lookup(uip_ipaddr_t * ipaddr)
+node_info_lookup(const uip_ipaddr_t * ipaddr)
 {
   node_info_t *node;
 

@@ -491,9 +491,7 @@ static uip_ds6_nbr_t *nbr;
   /* Span generator calls over tcp segments */
   /* Note retransmissions will execute thise code multiple times for a segment */
   i=s->starti;j=s->startj;
-  for(nbr = nbr_table_head(ds6_neighbors);
-      nbr != NULL;
-      nbr = nbr_table_next(ds6_neighbors, nbr), i++) {
+  for(nbr = uip_ds6_nbr_head(); nbr != NULL; nbr = uip_ds6_nbr_next(nbr), i++) {
       j++;
 
 #if WEBSERVER_CONF_NEIGHBOR_STATUS

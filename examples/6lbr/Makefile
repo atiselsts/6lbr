@@ -11,12 +11,17 @@ WITH_CONTIKI?=1
 ifeq ($(WITH_CONTIKI),1)
 CONTIKI ?= $(6LBR)/../..
 else
-CONTIKI ?= $(6LBR)/../../../cetic-contiki-ng
+CONTIKI ?= $(6LBR)/../../../mimos-contiki-ng
+
+include $(CONTIKI)/Makefile.dir-variables
+MODULES += $(CONTIKI_NG_SERVICES_DIR)/resolv
 endif
 
 APPDIRS += $(6LBR)/apps $(6LBR)/../6lbr-demo/apps
 
 PROJECTDIRS += $(6LBR) $(6LBR)/6lbr
+
+MODULES += 
 
 ifeq ($(TARGET),)
 TARGET=native

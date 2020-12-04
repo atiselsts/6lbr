@@ -57,7 +57,6 @@
 
 #define UIP_ETHTYPE_802154 0x809A
 
-#define UIP_IP_BUF   ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
 #define ETHBUF(x) ((struct uip_eth_hdr *)x)
 
 //For little endian, such as our friend mr. AVR
@@ -72,13 +71,12 @@ typedef struct {
   uint8_t data[16];
 } icmp_opts_t;
 
-#define UIP_ICMP_BUF     ((struct uip_icmp_hdr *)&uip_buf[UIP_LLH_LEN + UIP_IPH_LEN])
-#define UIP_ICMP_OPTS(x) ((icmp_opts_t *)&uip_buf[UIP_LLH_LEN + UIP_IPH_LEN + x])
+#define UIP_ICMP_OPTS(x) ((icmp_opts_t *)&uip_buf[UIP_IPH_LEN + x])
 
 static void slide(uint8_t * data, uint8_t length, int16_t slide);
 
 /* 6lowpan max size + ethernet header size + 1 */
-uint8_t raw_buf[127 + UIP_LLH_LEN + 1];
+uint8_t raw_buf[127 + 1];
 
 /**
  * \brief Translate IP packet's possible link-layer addresses, passing

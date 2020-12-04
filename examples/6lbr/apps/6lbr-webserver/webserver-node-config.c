@@ -49,8 +49,6 @@
 
 #include "node-config.h"
 
-#define UIP_IP_BUF ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
-
 static
 PT_THREAD(generate_sensors_config(struct httpd_state *s))
 {

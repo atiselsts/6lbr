@@ -224,7 +224,7 @@ native_rdc_send_ip_packet(const uip_lladdr_t *localdest)
     }
     size += sizeof(uip_lladdr_t);
     /* Copy packet data */
-    memcpy(&buf[size], &uip_buf[UIP_LLH_LEN], uip_len);
+    memcpy(&buf[size], &uip_buf[0], uip_len);
     size += uip_len;
 
     callbacks[sid].buf_len = size;
@@ -324,11 +324,11 @@ native_rdc_packet_input(slip_descr_t *slip_device, unsigned char *data, int len)
     packetbuf_set_addr(PACKETBUF_ADDR_SENDER, (linkaddr_t *)&src);
     memcpy(&dest, data + sizeof(uip_lladdr_t), sizeof(uip_lladdr_t));
     packetbuf_set_addr(PACKETBUF_ADDR_RECEIVER, (linkaddr_t *)&dest);
-    memcpy(&uip_buf[UIP_LLH_LEN], data + sizeof(uip_lladdr_t) * 2, len - sizeof(uip_lladdr_t) * 2);
+    memcpy(&uip_buf[0], data + sizeof(uip_lladdr_t) * 2, len - sizeof(uip_lladdr_t) * 2);
     uip_len = len  - sizeof(uip_lladdr_t)  * 2;
 
     LOG6LBR_PRINTF(PACKET, RADIO_IN, "read: %d\n", uip_len);
-    LOG6LBR_DUMP_PACKET(RADIO_IN, &uip_buf[UIP_LLH_LEN], uip_len);
+    LOG6LBR_DUMP_PACKET(RADIO_IN, uip_buf, uip_len);
 
 #if WITH_CONTIKI
     tcpip_input();

@@ -81,7 +81,7 @@ eth_drv_input(uint8_t *packet, uint16_t len)
     IP64_INPUT(packet, len);
   } else {
 #endif
-    uip_len = len - UIP_LLH_LEN;
+    uip_len = len;
     memcpy(uip_buf, packet, len);
     eth_input();
 #if CETIC_6LBR_WITH_IP64

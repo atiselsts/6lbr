@@ -69,7 +69,6 @@ int rpl_ignore_other_dodags = 1;
 static struct ctimer create_dodag_root_timer;
 static struct uip_ds6_notification create_dodag_root_route_callback;
 static clock_time_t dodag_root_check_interval;
-#define UIP_IP_BUF       ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
 /*---------------------------------------------------------------------------*/
 static void
 check_dodag_creation(void *data);
@@ -206,7 +205,7 @@ check_dodag_creation(void *data)
 }
 /*---------------------------------------------------------------------------*/
 static void
-route_callback(int event, uip_ipaddr_t *route, uip_ipaddr_t *ipaddr, int numroutes)
+route_callback(int event, const uip_ipaddr_t *route, const uip_ipaddr_t *ipaddr, int numroutes)
 {
   if(event == UIP_DS6_NOTIFICATION_DEFRT_ADD) {
     if(route != NULL && ipaddr != NULL &&

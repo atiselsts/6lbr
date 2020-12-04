@@ -285,9 +285,8 @@ uint8_t j=0;
 uint16_t numprinted;
   numprinted = httpd_snprintf((char *)uip_appdata, uip_mss(),httpd_cgi_addrh);
   uip_ds6_nbr_t *nbr;
-  for(nbr = nbr_table_head(ds6_neighbors);
-      nbr != NULL;
-      nbr = nbr_table_next(ds6_neighbors, nbr)) {
+
+  for(nbr = uip_ds6_nbr_head(); nbr != NULL; nbr = uip_ds6_nbr_next(nbr)) {
     j++;
     numprinted += httpd_cgi_sprint_ip6(nbr->ipaddr, uip_appdata + numprinted);
     numprinted += httpd_snprintf((char *)uip_appdata+numprinted, uip_mss()-numprinted, httpd_cgi_addrb);

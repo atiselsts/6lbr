@@ -45,6 +45,8 @@
 #include "nvm-config.h"
 #include "rio.h"
 
+#include "resolv.h"
+
 #if CONTIKI_TARGET_NATIVE
 extern void cetic_6lbr_save_ip(void);
 #endif

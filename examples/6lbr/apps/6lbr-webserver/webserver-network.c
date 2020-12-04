@@ -206,9 +206,7 @@ PT_THREAD(generate_network(struct httpd_state *s))
 
   add("</pre><h2>Neighbors</h2><pre>");
 
-  for(nbr = nbr_table_head(ds6_neighbors);
-      nbr != NULL;
-      nbr = nbr_table_next(ds6_neighbors, nbr)) {
+  for(nbr = uip_ds6_nbr_head(); nbr != NULL; nbr = uip_ds6_nbr_next(nbr)) {
 
     if ((cetic_6lbr_global_flags & CETIC_GLOBAL_DISABLE_CONFIG) == 0) {
       add("[<a href=\"nbr-rm?");

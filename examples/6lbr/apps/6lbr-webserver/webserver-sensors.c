@@ -52,8 +52,6 @@
 #include "node-config.h"
 #endif
 
-#define UIP_IP_BUF ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
-
 static const char * graph_top =
     "<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"
     "<script type=\"text/javascript\">"

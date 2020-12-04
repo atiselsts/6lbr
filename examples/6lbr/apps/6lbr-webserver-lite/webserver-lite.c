@@ -593,9 +593,7 @@ PT_THREAD(generate_index(struct httpd_state *s))
   reset_buf();
 
   add("</pre><h2>Neighbors</h2><pre>");
-  for(nbr = nbr_table_head(ds6_neighbors);
-      nbr != NULL;
-      nbr = nbr_table_next(ds6_neighbors, nbr)) {
+  for(nbr = uip_ds6_nbr_head(); nbr != NULL; nbr = uip_ds6_nbr_next(nbr)) {
     ipaddr_add(&nbr->ipaddr);
     add(" ");
     lladdr_add(uip_ds6_nbr_get_ll(nbr));

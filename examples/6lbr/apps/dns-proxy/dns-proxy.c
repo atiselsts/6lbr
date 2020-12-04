@@ -44,8 +44,6 @@
 
 static struct uip_udp_conn *server_conn;
 
-#define UIP_IP_BUF   ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
-#define UIP_UDP_BUF  ((struct uip_udp_hdr *)&uip_buf[UIP_LLH_LEN + UIP_IPH_LEN])
 extern uint16_t uip_slen;
 
 PROCESS(dns_proxy_process, "DNS proxy process");

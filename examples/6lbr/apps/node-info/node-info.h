@@ -95,30 +95,30 @@ node_info_config(void);
 void
 node_info_update_all(void);
 
-node_info_t *node_info_add(uip_ipaddr_t * ipaddr);
+node_info_t *node_info_add(const uip_ipaddr_t * ipaddr);
 
 void
 node_info_rm(node_info_t *node_info);
 
 void
-node_info_rm_by_addr(uip_ipaddr_t * ipaddr);
+node_info_rm_by_addr(const uip_ipaddr_t * ipaddr);
 
-node_info_t *node_info_lookup(uip_ipaddr_t * ipaddr);
+node_info_t *node_info_lookup(const uip_ipaddr_t * ipaddr);
 
 node_info_t *
-node_info_update(uip_ipaddr_t * ipaddr, char * info);
+node_info_update(const uip_ipaddr_t * ipaddr, char * info);
 
 void
-node_info_node_seen(uip_ipaddr_t * ipaddr, int hop_count);
+node_info_node_seen(const uip_ipaddr_t * ipaddr, int hop_count);
 
 void
 node_info_analyze_packet(void);
 
 void
-node_info_set_flags(uip_ipaddr_t * ipaddr, uint32_t flags);
+node_info_set_flags(const uip_ipaddr_t * ipaddr, uint32_t flags);
 
 void
-node_info_clear_flags(uip_ipaddr_t * ipaddr, uint32_t flags);
+node_info_clear_flags(const uip_ipaddr_t * ipaddr, uint32_t flags);
 
 char const *
 node_info_flags_text(uint32_t flags);
