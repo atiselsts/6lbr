@@ -11,7 +11,7 @@ WITH_CONTIKI?=1
 ifeq ($(WITH_CONTIKI),1)
 CONTIKI ?= $(6LBR)/../..
 else
-CONTIKI ?= $(6LBR)/../../../contiki-ng
+CONTIKI ?= $(6LBR)/../../../cetic-contiki-ng
 endif
 
 APPDIRS += $(6LBR)/apps $(6LBR)/../6lbr-demo/apps

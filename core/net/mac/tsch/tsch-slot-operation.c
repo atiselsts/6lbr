@@ -705,7 +705,8 @@ PT_THREAD(tsch_tx_slot(struct pt *pt, struct rtimer *t))
 #else /* LLSEC802154_ENABLED */
     log->tx.sec_level = 0;
 #endif /* LLSEC802154_ENABLED */
-    log->tx.dest = TSCH_LOG_ID_FROM_LINKADDR(queuebuf_addr(current_packet->qb, PACKETBUF_ADDR_RECEIVER));
+            //log->tx.dest = TSCH_LOG_ID_FROM_LINKADDR(queuebuf_addr(current_packet->qb, PACKETBUF_ADDR_RECEIVER));
+    linkaddr_copy(&log->tx.dest, queuebuf_addr(current_packet->qb, PACKETBUF_ADDR_RECEIVER));
     );
 
     /* Poll process for later processing of packet sent events and logs */
@@ -899,7 +900,7 @@ PT_THREAD(tsch_rx_slot(struct pt *pt, struct rtimer *t))
 
             /* Log every reception */
             TSCH_LOG_ADD(tsch_log_rx,
-              log->rx.src = TSCH_LOG_ID_FROM_LINKADDR((linkaddr_t*)&frame.src_addr);
+              linkaddr_copy(&log->rx.src, (linkaddr_t *)&frame.src_addr);
               log->rx.is_unicast = frame.fcf.ack_required;
               log->rx.datalen = current_input->len;
               log->rx.drift = drift_correction;

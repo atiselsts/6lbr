@@ -5,6 +5,9 @@ PROJECTDIR=$(CONTIKI)/examples/ipv6/slip-radio
 
 #DEFINES=NETSTACK_CONF_RDC=contikimac_driver
 
+WITH_SLIP_IP=1
+WITH_TSCH=1
+
 ifeq ($(TARGET),cooja)
 MODULES+=core/net/mac/contikimac
 DEFINES+=CONTIKIMAC_CONF_SEND_SW_ACK=1

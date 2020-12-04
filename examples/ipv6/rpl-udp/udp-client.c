@@ -107,6 +107,11 @@ send_packet(void *ptr)
   seq_id++;
   PRINTF("DATA send to %d 'Hello %d'\n",
          server_ipaddr.u8[sizeof(server_ipaddr.u8) - 1], seq_id);
+
+  PRINTF("  addr:");
+  PRINT6ADDR(&server_ipaddr);
+  PRINTF("\n");
+
   sprintf(buf, "Hello %d from the client", seq_id);
   uip_udp_packet_sendto(client_conn, buf, strlen(buf),
                         &server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
@@ -158,16 +163,19 @@ set_global_address(void)
  * addresses.
  */
  
-#if 0
-/* Mode 1 - 64 bits inline */
-   uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0, 0, 0, 1);
-#elif 1
-/* Mode 2 - 16 bits inline */
-  uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0, 0x00ff, 0xfe00, 1);
-#else
-/* Mode 3 - derived from server link-local (MAC) address */
-  uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0x0250, 0xc2ff, 0xfea8, 0xcd1a); //redbee-econotag
-#endif
+/* #if 0 */
+/* /\* Mode 1 - 64 bits inline *\/ */
+/*    uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0, 0, 0, 1); */
+/* #elif 1 */
+/* /\* Mode 2 - 16 bits inline *\/ */
+/*   uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0, 0x00ff, 0xfe00, 1); */
+/* #else */
+/* /\* Mode 3 - derived from server link-local (MAC) address *\/ */
+/*   uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0x0250, 0xc2ff, 0xfea8, 0xcd1a); //redbee-econotag */
+/* #endif */
+
+  uip_ip6addr(&server_ipaddr, UIP_DS6_DEFAULT_PREFIX, 0, 0, 0, 0x212, 0x4b00, 0x1204, 0xddd5);
+
 }
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(udp_client_process, ev, data)

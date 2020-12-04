@@ -1,1 +1,4 @@
-TARGET = sky
+TARGET = srf06-cc26xx
+#BOARD = launchpad/cc1310
+BOARD = launchpad/cc2650
+

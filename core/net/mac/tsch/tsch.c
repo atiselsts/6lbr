@@ -927,13 +927,16 @@ send_packet(mac_callback_t sent, void *ptr)
       ret = MAC_TX_ERR;
     } else {
       p->header_len = hdr_len;
-      PRINTF("TSCH: send packet to %u with seqno %u, queue %u %u, len %u %u\n",
-             TSCH_LOG_ID_FROM_LINKADDR(addr),
+      PRINTF("TSCH: send packet with seqno %u, queue %u %u, len %u %u\n",
              packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO),
              packet_count_before,
              tsch_queue_packet_count(addr),
              p->header_len,
              queuebuf_datalen(p->qb));
+      PRINTF("  to=0x%02x:0x%02x:0x%02x:0x%02x:0x%02x:0x%02x\n",
+              addr->u8[0], addr->u8[1], addr->u8[2],
+              addr->u8[3], addr->u8[4], addr->u8[5]
+          );
       (void)packet_count_before; /* Discard "variable set but unused" warning in case of TSCH_LOG_LEVEL of 0 */
     }
   }
@@ -969,9 +972,14 @@ packet_input(void)
     }
 
     if(!duplicate) {
-      PRINTF("TSCH: received from %u with seqno %u\n",
-             TSCH_LOG_ID_FROM_LINKADDR(packetbuf_addr(PACKETBUF_ADDR_SENDER)),
+      PRINTF("TSCH: received with seqno %u\n",
              packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO));
+      const linkaddr_t *addr = packetbuf_addr(PACKETBUF_ADDR_SENDER);
+      PRINTF("  from=0x%02x:0x%02x:0x%02x:0x%02x:0x%02x:0x%02x\n",
+              addr->u8[0], addr->u8[1], addr->u8[2],
+              addr->u8[3], addr->u8[4], addr->u8[5]
+          );
+
       NETSTACK_LLSEC.input();
     }
   }

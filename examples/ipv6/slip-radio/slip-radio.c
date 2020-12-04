@@ -43,7 +43,7 @@
 #include "net/packetbuf.h"
 #include "dev/watchdog.h"
 
-#define DEBUG DEBUG_NONE
+#define DEBUG DEBUG_PRINT
 #include "net/ip/uip-debug.h"
 #include "cmd.h"
 #include "slip-radio.h"

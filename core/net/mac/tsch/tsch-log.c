@@ -70,6 +70,20 @@ static struct ringbufindex log_ringbuf;
 static struct tsch_log_t log_array[TSCH_LOG_QUEUE_LEN];
 static int log_dropped = 0;
 
+
+void
+log_lladdr_compact(const linkaddr_t *lladdr)
+{
+  /* if(lladdr == NULL || linkaddr_cmp(lladdr, &linkaddr_null)) { */
+  /*   printf("LL-NULL"); */
+  /* } else { */
+  /*   printf("LL-%04x", UIP_HTONS(lladdr->u16[LINKADDR_SIZE/2-1])); */
+  /* } */
+
+    printf("0x%02x:0x%02x:0x%02x:0x%02x:0x%02x:0x%02x",
+            lladdr->u8[0], lladdr->u8[1], lladdr->u8[2],
+            lladdr->u8[3], lladdr->u8[4], lladdr->u8[5]);
+}
 /*---------------------------------------------------------------------------*/
 /* Process pending log messages */
 void
@@ -95,21 +109,25 @@ tsch_log_process_pending(void)
     }
     switch(log->type) {
       case tsch_log_tx:
-        printf("%s-%u-%u %u tx %d, st %d-%d",
-            log->tx.dest == 0 ? "bc" : "uc", log->tx.is_data, log->tx.sec_level,
-                log->tx.datalen,
-                log->tx.dest,
-                log->tx.mac_tx_status, log->tx.num_tx);
+        printf("%s-%u-%u %u tx ",
+            linkaddr_cmp(&log->tx.dest, &linkaddr_null) ? "bc" : "uc", log->tx.is_data, log->tx.sec_level,
+                log->tx.datalen);
+        log_lladdr_compact(&linkaddr_node_addr);
+        printf("->");
+        log_lladdr_compact(&log->tx.dest);
+        printf(" %d-%d", log->tx.mac_tx_status, log->tx.num_tx);
         if(log->tx.drift_used) {
           printf(", dr %d", log->tx.drift);
         }
         printf("\n");
         break;
       case tsch_log_rx:
-        printf("%s-%u-%u %u rx %d",
+        printf("%s-%u-%u %u rx ",
             log->rx.is_unicast == 0 ? "bc" : "uc", log->rx.is_data, log->rx.sec_level,
-                log->rx.datalen,
-                log->rx.src);
+                log->rx.datalen);
+        log_lladdr_compact(&log->rx.src);
+        printf("->");
+        log_lladdr_compact(log->rx.is_unicast ? &linkaddr_node_addr : NULL);
         if(log->rx.drift_used) {
           printf(", dr %d", log->rx.drift);
         }

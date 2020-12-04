@@ -87,7 +87,7 @@ struct tsch_log_t {
     char message[48];
     struct {
       int mac_tx_status;
-      int dest;
+      linkaddr_t dest;
       int drift;
       uint8_t num_tx;
       uint8_t datalen;
@@ -96,7 +96,7 @@ struct tsch_log_t {
       uint8_t drift_used;
     } tx;
     struct {
-      int src;
+      linkaddr_t src;
       int drift;
       int estimated_drift;
       uint8_t datalen;

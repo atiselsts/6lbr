@@ -143,6 +143,9 @@
 #undef TSCH_SCHEDULE_CONF_DEFAULT_LENGTH
 #define TSCH_SCHEDULE_CONF_DEFAULT_LENGTH 3
 
+#define TSCH_CONF_DEFAULT_HOPPING_SEQUENCE TSCH_HOPPING_SEQUENCE_1_1
+#define TSCH_CONF_RX_WAIT 1700
+
 /* Needed for CC2538 platforms only */
 /* For TSCH we have to use the more accurate crystal oscillator
  * by default the RC oscillator is activated */
