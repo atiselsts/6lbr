@@ -1,6 +1,6 @@
 PROJECT=slip-radio
 
-CONTIKI=../../../../../../cetic-contiki-ng
+CONTIKI=../../../../../../mimos-contiki-ng
 PROJECTDIR=$(CONTIKI)/examples/slip-radio
 
 WITH_SLIP_IP=1
