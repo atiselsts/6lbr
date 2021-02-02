@@ -76,12 +76,14 @@
 #undef UIP_CONF_DS6_ADDR_NBU
 #define UIP_CONF_DS6_ADDR_NBU   0
 
-#define CMD_CONF_OUTPUT slip_write
+#define CMD_CONF_OUTPUT slip_radio_cmd_output
 
 /* Default CMD handlers if the target did not specify them */
 #ifndef CMD_CONF_HANDLERS
 #define CMD_CONF_HANDLERS slip_radio_cmd_handler
 #endif
+
+#define NETSTACK_CONF_FRAMER no_framer
 
 #if SLIP_RADIO_IP
 
@@ -106,9 +108,9 @@
 #define LOG_CONF_LEVEL_RPL                         LOG_LEVEL_WARN
 #define LOG_CONF_LEVEL_TCPIP                       LOG_LEVEL_WARN
 #define LOG_CONF_LEVEL_IPV6                        LOG_LEVEL_WARN
-#define LOG_CONF_LEVEL_6LOWPAN                     LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_6LOWPAN                     LOG_LEVEL_DBG
 #define LOG_CONF_LEVEL_MAC                         LOG_LEVEL_DBG
-#define LOG_CONF_LEVEL_FRAMER                      LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_FRAMER                      LOG_LEVEL_DBG
 #define TSCH_LOG_CONF_PER_SLOT                     1
 
 /* Do not start TSCH at init, wait for NETSTACK_MAC.on() */
@@ -123,16 +125,15 @@
 #define TSCH_CONF_DEFAULT_HOPPING_SEQUENCE TSCH_HOPPING_SEQUENCE_1_1
 #define TSCH_CONF_RX_WAIT 1700
 
-#else /* WITH_TSCH */
-
-#define NETSTACK_CONF_FRAMER no_framer
-
 #endif /* WITH_TSCH */
 
 #else /* SLIP_RADIO_IP */
 
 /* Configuration for the slipradio/network driver. */
 #define NETSTACK_CONF_NETWORK slipnet_driver
+
+/* Override the default debug output to prefix it with SLIP_END symbols */
+#define DBG_OUTPUT_IS_APP_DEFINED 1
 
 #endif /* SLIP_RADIO_IP */
 
