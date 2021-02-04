@@ -108,9 +108,9 @@
 #define LOG_CONF_LEVEL_RPL                         LOG_LEVEL_WARN
 #define LOG_CONF_LEVEL_TCPIP                       LOG_LEVEL_WARN
 #define LOG_CONF_LEVEL_IPV6                        LOG_LEVEL_WARN
-#define LOG_CONF_LEVEL_6LOWPAN                     LOG_LEVEL_DBG
+#define LOG_CONF_LEVEL_6LOWPAN                     LOG_LEVEL_WARN
 #define LOG_CONF_LEVEL_MAC                         LOG_LEVEL_DBG
-#define LOG_CONF_LEVEL_FRAMER                      LOG_LEVEL_DBG
+#define LOG_CONF_LEVEL_FRAMER                      LOG_LEVEL_WARN
 #define TSCH_LOG_CONF_PER_SLOT                     1
 
 /* Do not start TSCH at init, wait for NETSTACK_MAC.on() */
@@ -135,7 +135,20 @@
 /* Override the default debug output to prefix it with SLIP_END symbols */
 #define DBG_OUTPUT_IS_APP_DEFINED 1
 
+#define CSMA_CONF_SEND_SOFT_ACK              1
+
+/* Logging */
+#define LOG_CONF_LEVEL_RPL                         LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_TCPIP                       LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_IPV6                        LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_6LOWPAN                     LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_MAC                         LOG_LEVEL_WARN
+#define LOG_CONF_LEVEL_FRAMER                      LOG_LEVEL_WARN
+
+
 #endif /* SLIP_RADIO_IP */
+
+#define CSMA_CONF_ACK_WAIT_TIME                (RTIMER_SECOND / 100)
 
 /*---------------------------------------------------------------------------*/
 #endif /* PROJECT_CONF_H_ */
